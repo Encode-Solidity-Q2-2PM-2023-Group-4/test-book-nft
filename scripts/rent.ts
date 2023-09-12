@@ -19,7 +19,10 @@ async function main() {
   const bookContract = bookContractFactory.attach("0x69bfABd8de278B2ab3EC480175924a7C49146194") as Book;
 
   // Lend NFT to Adam
-  const rentTx = await bookContract.setUser(1, "0xBe124408dE4a263d0e746e9dB41744f66C3e5DF4", block.timestamp + 120);
+  const blockNumber = await provider.getBlockNumber();
+  const currentBlock = (await provider.getBlock(blockNumber));
+  const blockTimestamp = (currentBlock != null) ? currentBlock.timestamp:0;
+  const rentTx = await bookContract.setUser(1, "0xBe124408dE4a263d0e746e9dB41744f66C3e5DF4", blockTimestamp + 120);
   await rentTx.wait();
 }
 
