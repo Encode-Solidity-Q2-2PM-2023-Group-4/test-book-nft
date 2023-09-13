@@ -9,6 +9,8 @@ function setupProvider(){
 }
 
 async function main() {
+  const tokenID = Number(process.argv[2]);
+  const rentalAddress = process.argv[3];
   // Define provider and wallet
   const provider = setupProvider();
   const wallet = new ethers.Wallet(process.env.PRIVATE_KEY ?? "", provider);
@@ -20,7 +22,7 @@ async function main() {
 
   // Lend NFT to Adam
   const currentBlocktime: number = Math.floor(Date.now() / 1000);
-  const rentTx = await bookContract.setUser(1, "0xBe124408dE4a263d0e746e9dB41744f66C3e5DF4", currentBlocktime + 120);
+  const rentTx = await bookContract.setUser(tokenID, rentalAddress, currentBlocktime + 120);
   await rentTx.wait();
 }
 
