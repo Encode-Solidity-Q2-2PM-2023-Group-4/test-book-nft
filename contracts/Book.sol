@@ -29,6 +29,20 @@ contract Book is ERC4907 {
     emit UpdateUser(tokenId, user, expires);
   }
 
+  function userOf(uint256 tokenId)
+    public
+    view
+    virtual
+    override
+    returns (address)
+  {
+    if (uint256(_users[tokenId].expires) >= block.timestamp) {
+      return _users[tokenId].user;
+    } else {
+      return address(0);
+    }
+  }
+
   function burn(uint256 tokenId) public {
     _burn(tokenId);
   }
