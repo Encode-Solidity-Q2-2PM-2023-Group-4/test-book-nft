@@ -10,12 +10,13 @@ contract Book is ERC4907 {
 
   constructor() ERC4907("Book", "BK") {}
 
-  function mint(string memory _tokenURI, string[] memory _metadata) public {
+  function mint(string memory _tokenURI, string[] memory _metadata, uint64 expires) public {
     _tokenIds.increment();
     uint256 newTokenId = _tokenIds.current();
     _safeMint(msg.sender, newTokenId);
     _setTokenURI(newTokenId, _tokenURI);
     _setTokenMetadata(newTokenId, _metadata);
+    setUser(newTokenId, msg.sender, expires);
   }
 
   function setUser(uint256 tokenId, address user, uint64 expires) public virtual override {
